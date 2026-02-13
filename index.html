@@ -133,25 +133,42 @@ Die erhobenen personenbezogenen Daten werden ausschließlich zur Vertragsabwickl
 // ═══════════════════════════════════════════════════════════════════
 // STORAGE
 // ═══════════════════════════════════════════════════════════════════
-const KV_KEY="rs_kvs_v4";
+const KV_KEY="rs_montagen_kvs";
 const Stor={
   getKVs(){
-    try{const r=localStorage.getItem(KV_KEY);if(!r)return[];return JSON.parse(r)||[]}
-    catch(e){console.error("KV load error:",e);return[]}
-  },
-  _saveAll(kvs){
-    try{localStorage.setItem(KV_KEY,JSON.stringify(kvs));return true}
-    catch(e){console.error("KV save error:",e);alert("Fehler beim Speichern! Bitte Browser-Speicher prüfen.");return false}
+    try{
+      const r=localStorage.getItem(KV_KEY);
+      if(!r)return[];
+      const parsed=JSON.parse(r);
+      return Array.isArray(parsed)?parsed:[];
+    }catch(e){console.error("KV load error:",e);return[]}
   },
   saveKV(kv){
-    const kvs=this.getKVs();
-    const i=kvs.findIndex(k=>k.kvNumber===kv.kvNumber);
-    if(i>=0)kvs[i]=kv;else kvs.unshift(kv);
-    return this._saveAll(kvs);
+    try{
+      const kvs=this.getKVs();
+      const i=kvs.findIndex(k=>k.kvNumber===kv.kvNumber);
+      if(i>=0)kvs[i]=kv;else kvs.unshift(kv);
+      const json=JSON.stringify(kvs);
+      localStorage.setItem(KV_KEY,json);
+      // Verify write succeeded
+      const check=localStorage.getItem(KV_KEY);
+      if(!check||check!==json){
+        alert("Fehler: KV konnte nicht gespeichert werden!");
+        return false;
+      }
+      return true;
+    }catch(e){
+      console.error("KV save error:",e);
+      alert("Speicherfehler: "+e.message);
+      return false;
+    }
   },
   delKV(n){
-    const kvs=this.getKVs().filter(k=>k.kvNumber!==n);
-    return this._saveAll(kvs);
+    try{
+      const kvs=this.getKVs().filter(k=>k.kvNumber!==n);
+      localStorage.setItem(KV_KEY,JSON.stringify(kvs));
+      return true;
+    }catch(e){console.error("KV delete error:",e);return false}
   },
 };
 
@@ -199,7 +216,9 @@ function MainApp({user,onLogout}){
   const[tab,setTab]=useState("calc");
   const[viewKV,setViewKV]=useState(null);
   const[bearbeiter,setBearbeiter]=useState(user.bearbeiter||"");
+  const[archKey,setArchKey]=useState(0);
   const openKV=kv=>{setViewKV(kv);setTab("view")};
+  const switchTab=t=>{if(t==="archive")setArchKey(k=>k+1);setTab(t);setViewKV(null)};
   const isAdmin=user.role==="admin";
   const needsB=!user.bearbeiter;
 
@@ -210,8 +229,8 @@ function MainApp({user,onLogout}){
           <img src={LOGO} alt="" style={{height:36}}/>
         </div>
         <div style={{display:"flex",gap:4}}>
-          <button style={tab==="calc"?S.tabA:S.tabB} onClick={()=>{setTab("calc");setViewKV(null)}}>📐 Kalkulator</button>
-          <button style={tab==="archive"?S.tabA:S.tabB} onClick={()=>{setTab("archive");setViewKV(null)}}>📁 Archiv</button>
+          <button style={tab==="calc"?S.tabA:S.tabB} onClick={()=>switchTab("calc")}>📐 Kalkulator</button>
+          <button style={tab==="archive"?S.tabA:S.tabB} onClick={()=>switchTab("archive")}>📁 Archiv</button>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:14}}>
           {needsB&&<input style={{...S.inp,width:160,padding:"6px 10px",fontSize:12}} value={bearbeiter} onChange={e=>setBearbeiter(e.target.value)} placeholder="Bearbeiter-Name"/>}
@@ -220,7 +239,7 @@ function MainApp({user,onLogout}){
         </div>
       </header>
       {tab==="calc"&&<CalcPage user={user} bearbeiter={bearbeiter||user.name} isAdmin={isAdmin}/>}
-      {tab==="archive"&&<ArchivePage user={user} isAdmin={isAdmin} onOpen={openKV}/>}
+      {tab==="archive"&&<ArchivePage key={archKey} user={user} isAdmin={isAdmin} onOpen={openKV}/>}
       {tab==="view"&&viewKV&&<ViewKV kv={viewKV} user={user} bearbeiter={bearbeiter||user.name} isAdmin={isAdmin} onBack={()=>{setViewKV(null);setTab("archive")}}/>}
     </div>
   );
@@ -271,12 +290,13 @@ function CalcPage({user,bearbeiter,isAdmin}){
   const sqmM=sqm>0?netto/sqm:0;
 
   const doGen=()=>{
-    const num=mkKV();setKvN(num);
-    Stor.saveKV({kvNumber:num,date:fmtD(),bearbeiter,
+    const num=mkKV();
+    const kvData={kvNumber:num,date:fmtD(),bearbeiter,
       kunde:{...ku},objekt:{...obj},sqm,zlm,gfLm,extras:[...exs],
       aufschlag:isAdmin?auf:0,sub,aufAmt:isAdmin?aufAmt:0,
-      netto,mwst,brutto,status:"offen",createdAt:new Date().toISOString()});
-    setShowKV(true);
+      netto,mwst,brutto,status:"offen",createdAt:new Date().toISOString()};
+    const saved=Stor.saveKV(kvData);
+    if(saved){setKvN(num);setShowKV(true)}
   };
 
   if(showKV)return<KVDoc kvN={kvN} ku={ku} obj={obj} sqm={sqm} zlm={zlm} gfLm={gfLm} exs={exs}
