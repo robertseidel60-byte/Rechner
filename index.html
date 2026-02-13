@@ -133,18 +133,26 @@ Die erhobenen personenbezogenen Daten werden ausschließlich zur Vertragsabwickl
 // ═══════════════════════════════════════════════════════════════════
 // STORAGE
 // ═══════════════════════════════════════════════════════════════════
-const SK="rs_kv_v3";
+const KV_KEY="rs_kvs_v4";
 const Stor={
-  _enc(d){return btoa(unescape(encodeURIComponent(JSON.stringify(d))))},
-  _dec(s){try{return JSON.parse(decodeURIComponent(escape(atob(s))))}catch{return null}},
-  load(){const r=localStorage.getItem(SK);if(!r)return{kvs:[],session:null};return this._dec(r)||{kvs:[],session:null}},
-  save(d){localStorage.setItem(SK,this._enc(d))},
-  getKVs(){return this.load().kvs||[]},
-  saveKV(kv){const d=this.load();d.kvs=d.kvs||[];const i=d.kvs.findIndex(k=>k.kvNumber===kv.kvNumber);if(i>=0)d.kvs[i]=kv;else d.kvs.unshift(kv);this.save(d)},
-  delKV(n){const d=this.load();d.kvs=(d.kvs||[]).filter(k=>k.kvNumber!==n);this.save(d)},
-  setSess(u){const d=this.load();d.session=u;this.save(d)},
-  getSess(){return this.load().session},
-  clearSess(){const d=this.load();d.session=null;this.save(d)},
+  getKVs(){
+    try{const r=localStorage.getItem(KV_KEY);if(!r)return[];return JSON.parse(r)||[]}
+    catch(e){console.error("KV load error:",e);return[]}
+  },
+  _saveAll(kvs){
+    try{localStorage.setItem(KV_KEY,JSON.stringify(kvs));return true}
+    catch(e){console.error("KV save error:",e);alert("Fehler beim Speichern! Bitte Browser-Speicher prüfen.");return false}
+  },
+  saveKV(kv){
+    const kvs=this.getKVs();
+    const i=kvs.findIndex(k=>k.kvNumber===kv.kvNumber);
+    if(i>=0)kvs[i]=kv;else kvs.unshift(kv);
+    return this._saveAll(kvs);
+  },
+  delKV(n){
+    const kvs=this.getKVs().filter(k=>k.kvNumber!==n);
+    return this._saveAll(kvs);
+  },
 };
 
 // ═══════════════════════════════════════════════════════════════════
@@ -165,7 +173,7 @@ function LoginPage({onLogin}){
   const[u,setU]=useState("");const[p,setP]=useState("");const[err,setErr]=useState("");
   const go=()=>{
     const f=USERS.find(x=>x.username===u.toLowerCase().trim()&&x.password===p.toLowerCase().trim());
-    if(f){Stor.setSess(f);onLogin(f)}else setErr("Ungültige Anmeldedaten");
+    if(f){onLogin(f)}else setErr("Ungültige Anmeldedaten");
   };
   return(
     <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"linear-gradient(135deg,#0f1419,#1a252f,#0d1117)"}}>
@@ -208,7 +216,7 @@ function MainApp({user,onLogout}){
         <div style={{display:"flex",alignItems:"center",gap:14}}>
           {needsB&&<input style={{...S.inp,width:160,padding:"6px 10px",fontSize:12}} value={bearbeiter} onChange={e=>setBearbeiter(e.target.value)} placeholder="Bearbeiter-Name"/>}
           <span style={{fontSize:13,color:"#7a8a99"}}>{bearbeiter||user.name} {isAdmin&&<span style={S.badge}>ADMIN</span>}</span>
-          <button style={S.logoutBtn} onClick={()=>{Stor.clearSess();onLogout()}} title="Abmelden">⏻</button>
+          <button style={S.logoutBtn} onClick={()=>{onLogout()}} title="Abmelden">⏻</button>
         </div>
       </header>
       {tab==="calc"&&<CalcPage user={user} bearbeiter={bearbeiter||user.name} isAdmin={isAdmin}/>}
@@ -648,7 +656,7 @@ function Row({l,r,hl,c,b}){const base={display:"flex",justifyContent:"space-betw
 
 // ROOT
 function App(){
-  const[user,setUser]=useState(()=>Stor.getSess());
+  const[user,setUser]=useState(null);
   if(!user)return<LoginPage onLogin={setUser}/>;
   return<MainApp user={user} onLogout={()=>setUser(null)}/>;
 }
