@@ -54,49 +54,75 @@ input,select,textarea{font-size:16px!important}
   .preview-sticky{position:relative!important;top:0!important}
 }
 
-/* MOBILE ≤ 640px */
-@media(max-width:640px){
-  .header-bar{padding:8px 12px!important;gap:6px!important;flex-wrap:wrap!important}
-  .header-tabs{gap:2px!important}
-  .header-tabs button{padding:6px 8px!important;font-size:11px!important}
-  .header-user{gap:6px!important}
+/* MOBILE ≤ 768px */
+@media(max-width:768px){
+  .header-bar{padding:8px 10px!important;gap:4px!important;flex-wrap:wrap!important;justify-content:center!important}
+  .header-tabs{gap:2px!important;order:2!important;width:100%!important;justify-content:center!important}
+  .header-tabs button{padding:6px 12px!important;font-size:12px!important;flex:1!important}
+  .header-user{gap:6px!important;order:3!important}
   .header-user .user-label{display:none!important}
 
-  .calc-grid{grid-template-columns:1fr!important;gap:16px!important}
-  .firma-grid{grid-template-columns:1fr!important}
+  .calc-grid{display:block!important}
+  .calc-grid>div{margin-bottom:16px!important}
+  .firma-grid{grid-template-columns:1fr!important;gap:8px!important}
   .form-grid{grid-template-columns:1fr!important}
-  .preview-sticky{position:relative!important;top:0!important}
+  .preview-sticky{position:relative!important;top:auto!important}
 
-  .card-inner{padding:16px!important}
+  .card-inner{padding:16px 12px!important;border-radius:10px!important}
 
   .archive-wrap{padding:10px!important}
-  .archive-item{flex-direction:column!important;align-items:stretch!important;gap:12px!important;padding:14px 16px!important}
-  .archive-btns{justify-content:flex-end!important}
-  .archive-search{width:100%!important;max-width:100%!important}
-  .archive-header{flex-direction:column!important;gap:10px!important}
+  .archive-header{flex-direction:column!important;gap:10px!important;align-items:stretch!important}
+  .archive-search{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+  .archive-item{flex-direction:column!important;align-items:stretch!important;gap:10px!important;padding:14px 12px!important}
+  .archive-btns{display:flex!important;gap:8px!important}
+  .archive-btns button{flex:1!important}
 
-  .kv-page{padding:20px 14px!important;margin:0 6px 16px!important;font-size:12px!important}
+  .kv-page{padding:16px 10px!important;margin:0 4px 12px!important;font-size:12px!important;border-radius:8px!important}
   .kv-header{flex-direction:column!important;gap:12px!important}
+  .kv-header>div{text-align:left!important}
   .kv-header>div:last-child{text-align:left!important}
-  .addr-grid{grid-template-columns:1fr!important;gap:16px!important}
-  .kv-sum{width:100%!important}
-  .kv-table{font-size:11px!important}
-  .kv-table th,.kv-table td{padding:8px 4px!important}
-  .sig-grid{grid-template-columns:1fr!important;gap:20px!important}
-  .footer-grid{grid-template-columns:1fr!important}
+  .addr-grid{grid-template-columns:1fr!important;gap:12px!important}
+  .kv-sum{width:100%!important;margin-left:0!important}
+  .kv-table{font-size:10px!important;word-break:break-word!important}
+  .kv-table th{padding:6px 3px!important;font-size:9px!important}
+  .kv-table td{padding:8px 3px!important;font-size:11px!important}
+  .sig-grid{grid-template-columns:1fr!important;gap:16px!important}
+  .footer-grid{grid-template-columns:1fr!important;gap:8px!important}
   .footer-grid>div{text-align:left!important}
-  .agb-page{padding:20px 14px!important;margin:0 6px 30px!important}
+  .agb-page{padding:16px 10px!important;margin:0 4px 24px!important}
 
-  .login-box{padding:28px 16px!important;width:calc(100% - 16px)!important;max-width:100%!important}
-  .login-logo{height:80px!important}
+  .login-box{padding:24px 16px!important;width:calc(100vw - 24px)!important;max-width:100%!important;margin:0 12px!important}
+  .login-logo{height:70px!important}
 
-  .nav-buttons{flex-wrap:wrap!important;gap:8px!important;padding:10px!important}
-  .nav-buttons button{flex:1!important;min-width:120px!important}
+  .nav-buttons{flex-wrap:wrap!important;gap:8px!important;padding:8px!important}
+  .nav-buttons>button,.nav-buttons>div{flex:1 1 auto!important;min-width:0!important;text-align:center!important;font-size:12px!important;padding:10px 8px!important}
 
-  .extra-row{flex-wrap:wrap!important}
-  .extra-price{font-size:12px!important;margin-top:2px}
+  .extra-row{flex-wrap:wrap!important;padding:8px 10px!important}
+  .extra-price{font-size:11px!important;white-space:normal!important}
 
-  .hinweise-box{padding:14px!important}
+  .hinweise-box{padding:12px 10px!important;font-size:10px!important}
+
+  .slider-row{flex-wrap:wrap!important;gap:8px!important}
+  .slider-row input[type=range]{width:100%!important;order:1!important}
+  .slider-row input[type=number]{order:2!important}
+  .slider-row span{order:3!important}
+
+  /* KV brutto box */
+  .brutto-line{font-size:15px!important}
+
+  /* Prevent zoom on iOS */
+  input,select,textarea{font-size:16px!important}
+  input[type=number]{-moz-appearance:textfield}
+}
+
+/* SMALL MOBILE ≤ 400px */
+@media(max-width:400px){
+  .header-bar{padding:6px 8px!important}
+  .firma-grid button{padding:10px 8px!important;min-height:auto!important}
+  .kv-page{padding:12px 8px!important}
+  .kv-table td{padding:6px 2px!important;font-size:10px!important}
+  .login-box{padding:20px 12px!important}
+  .login-logo{height:55px!important}
 }
 
 /* LANDSCAPE MOBILE */
@@ -104,7 +130,7 @@ input,select,textarea{font-size:16px!important}
   .header-bar{padding:4px 12px!important}
   .header-tabs button{padding:4px 8px!important;font-size:11px!important}
   .login-box{padding:16px!important}
-  .login-logo{height:50px!important}
+  .login-logo{height:40px!important}
 }
 </style>
 </head>
@@ -261,6 +287,7 @@ const Stor = {
 const USERS = [
   { username:"robert", password:"rs2024", role:"admin", name:"Robert Seidel", bearbeiter:"Robert Seidel" },
   { username:"thomas", password:"tewo", role:"admin", name:"Thomas", bearbeiter:"Thomas Lieder" },
+  { username:"ben", password:"tewo", role:"user", name:"Ben", bearbeiter:"Ben" },
   { username:"mitarbeiter", password:"montage", role:"user", name:"Mitarbeiter", bearbeiter:"" },
 ];
 
@@ -435,7 +462,7 @@ function MainApp({user,onLogout}){
       </header>
       {tab==="calc"&&<CalcPage user={user} bearbeiter={bearbeiter||user.name} isAdmin={isAdmin}/>}
       {tab==="archive"&&<ArchivePage user={user} isAdmin={isAdmin} onOpen={openKV}/>}
-      {tab==="view"&&viewKV&&<ErrorBoundary><ViewKV kv={viewKV} bearbeiter={bearbeiter||user.name} isAdmin={isAdmin} onBack={()=>{setViewKV(null);setTab("archive")}}/></ErrorBoundary>}
+      {tab==="view"&&viewKV&&<ErrorBoundary><ViewKV kv={viewKV} bearbeiter={bearbeiter||user.name} isAdmin={isAdmin} user={user} onBack={()=>{setViewKV(null);setTab("archive")}}/></ErrorBoundary>}
     </div>
   );
 }
@@ -493,7 +520,7 @@ function CalcPage({user,bearbeiter,isAdmin}){
 
   if(showKV)return<ErrorBoundary><KVDoc kvN={kvN} ku={ku} obj={obj} sqm={sqm} zlm={zlm} gfLm={gfLm} exs={exs}
     netto={netto} mwst={mwst} brutto={brutto} bearbeiter={bearbeiter} isAdmin={isAdmin}
-    auf={auf} aufAmt={aufAmt} onBack={()=>setShowKV(false)}/></ErrorBoundary>;
+    auf={auf} aufAmt={aufAmt} user={user} onBack={()=>setShowKV(false)}/></ErrorBoundary>;
 
   const fLabel=f=>{
     if(f.co)return<><span style={{display:"block",fontSize:11,fontWeight:700,color:"#e0e8f0"}}>{f.name}</span><span style={{display:"block",fontSize:9,color:"#e8c547",marginTop:1}}>{f.co}</span><span style={{display:"block",fontSize:10,color:"#5a6a7a",marginTop:2}}>{f.plz} {f.ort}</span></>;
@@ -534,17 +561,17 @@ function CalcPage({user,bearbeiter,isAdmin}){
             <h2 style={S.ct}><span>📐</span> Kalkulation</h2>
             <div style={{marginBottom:18}}>
               <label style={S.lb}>Wohnfläche (m²) — inkl. E-Check</label>
-              <div style={S.sr}><input type="range" min="20" max="200" value={sqm} onChange={e=>setSqm(+e.target.value)} style={{flex:1,accentColor:"#e8c547"}}/>
+              <div className="slider-row" style={S.sr}><input type="range" min="20" max="200" value={sqm} onChange={e=>setSqm(+e.target.value)} style={{flex:1,accentColor:"#e8c547"}}/>
               <input type="number" value={sqm} onChange={e=>setSqm(+e.target.value||0)} style={{...S.inp,width:80,textAlign:"center"}}/><span style={S.u}>m²</span></div>
             </div>
             <div style={{marginBottom:18}}>
               <label style={S.lb}>Zuleitung — {fmt(ZULEITUNG.pricePerMeter)}/m netto (nach echtem Aufmaß)</label>
-              <div style={S.sr}><input type="number" min="0" value={zlm} onChange={e=>setZlm(+e.target.value||0)} style={{...S.inp,width:100,textAlign:"center"}}/>
+              <div className="slider-row" style={S.sr}><input type="number" min="0" value={zlm} onChange={e=>setZlm(+e.target.value||0)} style={{...S.inp,width:100,textAlign:"center"}}/>
               <span style={S.u}>m</span>{zlm>0&&<span style={{color:"#e8c547",fontSize:13,fontWeight:600}}>≈ {fmt(calcZL(zlm))}</span>}</div>
             </div>
             <div>
               <label style={S.lb}>Glasfaser-Vorbereitung — 17,00 €/lm (nach echtem Aufmaß)</label>
-              <div style={S.sr}><input type="number" min="0" value={gfLm} onChange={e=>setGfLm(+e.target.value||0)} style={{...S.inp,width:100,textAlign:"center"}}/>
+              <div className="slider-row" style={S.sr}><input type="number" min="0" value={gfLm} onChange={e=>setGfLm(+e.target.value||0)} style={{...S.inp,width:100,textAlign:"center"}}/>
               <span style={S.u}>lm</span>{gfLm>0&&<span style={{color:"#e8c547",fontSize:13,fontWeight:600}}>≈ {fmt(gfLm*17)}</span>}</div>
             </div>
           </div>
@@ -569,7 +596,7 @@ function CalcPage({user,bearbeiter,isAdmin}){
           {isAdmin&&(<div style={S.adCard}>
             <h2 style={S.ct}><span>🔒</span> Interner Aufschlag</h2>
             <p style={{color:"#8a7a5a",fontSize:12,margin:"0 0 16px"}}>Vermittlung — nur Admin, nie im KV sichtbar.</p>
-            <div style={S.sr}><input type="range" min="0" max="100" step="0.5" value={auf} onChange={e=>setAuf(+e.target.value)} style={{flex:1,accentColor:"#ff6b6b"}}/>
+            <div className="slider-row" style={S.sr}><input type="range" min="0" max="100" step="0.5" value={auf} onChange={e=>setAuf(+e.target.value)} style={{flex:1,accentColor:"#ff6b6b"}}/>
             <input type="number" min="0" max="100" step="0.1" value={auf} onChange={e=>setAuf(Math.min(100,Math.max(0,+e.target.value||0)))} style={{...S.inp,width:90,textAlign:"center"}}/><span style={S.u}>%</span></div>
             {auf>0&&(<div style={{marginTop:16,padding:16,background:"rgba(0,0,0,0.3)",borderRadius:10,border:"1px solid rgba(232,197,71,0.15)"}}>
               <Row l="m²-Preis ohne" r={fmt(sqmB)+" /m²"}/><Row l={`m²-Preis +${auf}%`} r={fmt(sqmM)+" /m²"} hl/>
@@ -599,7 +626,7 @@ function CalcPage({user,bearbeiter,isAdmin}){
             </>)}
             <PRow l="Netto" r={fmt(netto)}/><PRow l="MwSt. 19%" r={fmt(mwst)}/>
             <div style={S.hdiv}/>
-            <div style={{display:"flex",justifyContent:"space-between",fontSize:18,fontWeight:800,color:"#e8c547",padding:"12px 0"}}><span>Brutto</span><span>{fmt(brutto)}</span></div>
+            <div className="brutto-line" style={{display:"flex",justifyContent:"space-between",fontSize:18,fontWeight:800,color:"#e8c547",padding:"12px 0"}}><span>Brutto</span><span>{fmt(brutto)}</span></div>
             <button style={{...S.btnG,opacity:saving?0.5:1}} onClick={doGen} disabled={saving}>
               {saving?"⏳ Speichert...":"⚡ KV erstellen & speichern"}
             </button>
@@ -637,7 +664,7 @@ function ArchivePage({user,isAdmin,onOpen}){
                 <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:4,flexWrap:"wrap"}}>
                   <span style={{fontWeight:700,color:"#e8c547",fontSize:15}}>{kv.kvNumber}</span>
                   <span style={{fontSize:12,color:"#5a6a7a"}}>{kv.date}</span>
-                  <span style={{fontSize:11,padding:"2px 8px",borderRadius:4,background:"rgba(59,130,246,0.15)",color:"#3b82f6"}}>{kv.status||"offen"}</span>
+                  {(()=>{const st=kv.status||"offen";const isA=st==="angenommen";return<span style={{fontSize:11,padding:"2px 8px",borderRadius:4,background:isA?"rgba(34,197,94,0.15)":"rgba(59,130,246,0.15)",color:isA?"#22c55e":"#3b82f6"}}>{st}</span>})()}
                   {kv.bearbeiter&&<span style={{fontSize:11,color:"#5a6a7a"}}>von {kv.bearbeiter}</span>}
                 </div>
                 <div style={{fontSize:13,color:"#a0a8b0"}}><strong>{(kv.kunde?.name||"").split("\n")[0]}</strong> — {kv.objekt?.strasse||"—"}, {kv.objekt?.ort} — {kv.sqm} m²</div>
@@ -658,7 +685,7 @@ function ArchivePage({user,isAdmin,onOpen}){
   );
 }
 
-function ViewKV({kv,bearbeiter,isAdmin,onBack}){
+function ViewKV({kv,bearbeiter,isAdmin,user,onBack}){
   if(!kv)return<div style={{padding:40,textAlign:"center",color:"#ff5c5c"}}>KV nicht gefunden<br/><button onClick={onBack} style={{marginTop:12,padding:"8px 20px",background:"#e8c547",color:"#0f1419",border:"none",borderRadius:8,cursor:"pointer"}}>Zurück</button></div>;
   // Firebase drops empty arrays, converts them to objects, or removes undefined fields
   let extras = [];
@@ -682,14 +709,26 @@ function ViewKV({kv,bearbeiter,isAdmin,onBack}){
   };
   return<ErrorBoundary><KVDoc kvN={s.kvN} ku={s.ku} obj={s.obj} sqm={s.sqm} zlm={s.zlm} gfLm={s.gfLm} exs={s.exs}
     netto={s.netto} mwst={s.mwst} brutto={s.brutto} bearbeiter={s.bea}
-    auf={s.auf} aufAmt={s.aufAmt} isAdmin={isAdmin} onBack={onBack} arch/></ErrorBoundary>;
+    auf={s.auf} aufAmt={s.aufAmt} isAdmin={isAdmin} user={user} onBack={onBack} arch/></ErrorBoundary>;
 }
 
 // ═══════════════════════════════════════════════════════════════════
 // KV DOCUMENT
 // ═══════════════════════════════════════════════════════════════════
-function KVDoc({kvN="—",ku:_ku,obj:_obj,sqm:_sqm=0,zlm:_zlm=0,gfLm:_gfLm=0,exs:_exs,netto:_n=0,mwst:_m=0,brutto:_b=0,bearbeiter="",auf=0,aufAmt=0,isAdmin,onBack,arch}){
+function KVDoc({kvN="—",ku:_ku,obj:_obj,sqm:_sqm=0,zlm:_zlm=0,gfLm:_gfLm=0,exs:_exs,netto:_n=0,mwst:_m=0,brutto:_b=0,bearbeiter="",auf=0,aufAmt=0,isAdmin,user,onBack,arch}){
   const[showAGB,setShowAGB]=useState(false);
+  const[kvStatus,setKvStatus]=useState("offen");
+  const[accepting,setAccepting]=useState(false);
+  const isRobert=user&&user.username==="robert";
+  const doAccept=async()=>{
+    setAccepting(true);
+    try{
+      const key=kvN.replace(/[.#$/\[\]]/g,"_");
+      if(firebaseReady){await kvsRef.child(key).update({status:"angenommen"})}
+      setKvStatus("angenommen");
+    }catch(e){alert("Fehler: "+e.message)}
+    setAccepting(false);
+  };
   const ku=_ku&&typeof _ku==="object"?_ku:{name:String(_ku||""),strasse:"",plz:"",ort:""};
   const obj=_obj&&typeof _obj==="object"?_obj:{strasse:"",plz:"",ort:"",lage:""};
   const sqm=Number(_sqm)||0;
@@ -709,6 +748,8 @@ function KVDoc({kvN="—",ku:_ku,obj:_obj,sqm:_sqm=0,zlm:_zlm=0,gfLm:_gfLm=0,exs
       <div className="no-print nav-buttons">
         <button style={S.backBtn} onClick={onBack}>← {arch?"Archiv":"Kalkulator"}</button>
         <button style={S.printBtn} onClick={()=>window.print()}>🖨 Drucken / PDF</button>
+        {isRobert&&kvStatus!=="angenommen"&&<button style={{padding:"10px 24px",background:"#22c55e",color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:700,cursor:"pointer",opacity:accepting?0.5:1}} onClick={doAccept} disabled={accepting}>{accepting?"⏳...":"✅ Angenommen"}</button>}
+        {kvStatus==="angenommen"&&<div style={{padding:"10px 24px",background:"rgba(34,197,94,0.15)",color:"#22c55e",borderRadius:8,fontSize:14,fontWeight:700,display:"flex",alignItems:"center",gap:6}}>✅ Angenommen</div>}
       </div>
       {isAdmin&&auf>0&&(<div style={{textAlign:"center",padding:10,background:"rgba(232,197,71,0.1)",color:"#e8c547",fontSize:13,fontWeight:600}} className="no-print">
         🔒 Aufschlag: {auf}% = {fmt(aufAmt)} | m² inkl.: {fmt(sqm>0?netto/sqm:0)}/m² | Nur intern
